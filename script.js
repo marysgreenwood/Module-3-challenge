@@ -100,7 +100,7 @@ function getRandom(arr) {
 var generatePassword = function(){
   //Determine password length
   var passwordLength= prompt("How many characters should be in your password?");
-  if (passwordLength <8 || passwordLength >12) {
+  if (passwordLength <8 || passwordLength >128) {
     alert ("Password length must be between 8 and 128 characters");
     return generatePassword()
   }
