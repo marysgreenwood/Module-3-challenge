@@ -88,6 +88,14 @@ var upperCasedCharacters = [
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
+//Define function to retrieve random element
+function getRandom(arr) {
+  var randIndex = Math.floor(Math.random() * arr.length);
+  var randElement = arr[randIndex];
+
+  return randElement;
+}
+
 //Declare generatePassword function
 var generatePassword = function(){
   //Determine password length
@@ -97,38 +105,51 @@ var generatePassword = function(){
     return generatePassword()
   }
   //Determine possible characters
+  var passwordOptions= [];
+  var guaranteedCharacters= [];
   var hasSpecialCharacters = confirm(
     'Click OK to confirm including special characters.'
 );
-  if (hasSpecialCharacters == true) {
-    var passwordOptions += specialCharacters
+  if (hasSpecialCharacters) {
+    passwordOptions = passwordOptions.concat (specialCharacters);
+    guaranteedCharacters.push (getRandom (specialCharacters));
   }
   var hasNumericCharacters = confirm(
     'Click OK to confirm including numbers.'
   );
-  if (hasNumericCharacters== true){
-    passwordOptions += numericCharacters
+  if (hasNumericCharacters){
+    passwordOptions= passwordOptions.concat (numericCharacters);
+    guaranteedCharacters.push (getRandom (numericCharacters));
+    console.log (guaranteedCharacters)
   }
   var hasLowercaseCharacters = confirm(
     'Click OK to confirm including lowercase characters.'
   );
-  if (hasLowercaseCharacters== true){
-    passwordOptions += lowerCasedCharacters
+  if (hasLowercaseCharacters){
+    passwordOptions= passwordOptions.concat(lowerCasedCharacters)
+    guaranteedCharacters.push (getRandom (lowerCasedCharacters));
   }
   var hasUppercaseCharacters = confirm(
     'Click OK to confirm including uppercase characters.'
   );
-  if (hasUppercaseCharacters== true){
-    passwordOptions += upperCasedCharacters
+  if (hasUppercaseCharacters){
+    passwordOptions= passwordOptions.concat(upperCasedCharacters)
+    guaranteedCharacters.push (getRandom (upperCasedCharacters))
   }
   
    // Function for getting a random element from an array
-  function getRandom(options) {
-  var randIndex = Math.floor(Math.random() * arr.length);
-  var randElement = arr[randIndex];
-
-  return randElement;
+   var result= [];
+   var passwordRandom = [];
+   for (var i =0; i<passwordLength; i++){
+    passwordRandom= getRandom(passwordOptions);
+    result.push (passwordRandom)
+  }
+  for (var i=0; i<guaranteedCharacters.length; i++){
+    result[i]=guaranteedCharacters[i];
+  }
+  return result.join('');
 }
+
 
 // Write password to the #password input
 function writePassword() {
