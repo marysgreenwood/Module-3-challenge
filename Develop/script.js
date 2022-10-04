@@ -1,7 +1,3 @@
-//Stopped at line 133--must find out how to set up conditional statements for constructing array based on passwordOptions
-
-// Assignment code here
-
 // Array of special characters to be included in password
 var specialCharacters = [
   '@',
@@ -59,7 +55,6 @@ var lowerCasedCharacters = [
   'y',
   'z',
 ];
-
 // Array of uppercase characters to be included in password
 var upperCasedCharacters = [
   'A',
@@ -93,66 +88,42 @@ var upperCasedCharacters = [
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-function getPasswordOptions() {
-  // 3)
-  // Variable to store length of password from user input
-  var length = parseInt(
-    prompt('How many characters would you like your password to contain?'),
-    10
-  );
-  // Conditional statement to check if password length is a number. Prompts end if this evaluates false
-  if (Number.isNaN(length)) {
-    alert('Password length must be provided as a number');
-    return null;
+//Declare generatePassword function
+var generatePassword = function(){
+  //Determine password length
+  var passwordLength= prompt("How many characters should be in your password?");
+  if (passwordLength <8 || passwordLength >12) {
+    alert ("Password length must be between 8 and 128 characters");
+    return generatePassword()
   }
-  // Conditional statement to check if password length is at least 8 characters long. Prompts end if this evaluates false
-  if (length < 8) {
-    alert('Password length must be at least 8 characters');
-    return null;
-  }
-  // Conditional statement to check if password length is less than 128 characters long. Prompts end if this evaluates false
-  if (length > 128) {
-    alert('Maximum password length 128 characters');
-    return null;
-  }
-  // Variable to store boolean regarding the inclusion of special characters
+  //Determine possible characters
   var hasSpecialCharacters = confirm(
     'Click OK to confirm including special characters.'
-  );
-
-  // Variable to store boolean regarding the inclusion of numeric characters
+);
+  if (hasSpecialCharacters == true) {
+    var passwordOptions += specialCharacters
+  }
   var hasNumericCharacters = confirm(
     'Click OK to confirm including numbers.'
   );
-  // Variable to store boolean regarding the inclusion of lowercase characters
+  if (hasNumericCharacters== true){
+    passwordOptions += numericCharacters
+  }
   var hasLowercaseCharacters = confirm(
     'Click OK to confirm including lowercase characters.'
   );
-  // Variable to store boolean regarding the inclusion of uppercase characters
+  if (hasLowercaseCharacters== true){
+    passwordOptions += lowerCasedCharacters
+  }
   var hasUppercaseCharacters = confirm(
     'Click OK to confirm including uppercase characters.'
   );
-  // Conditional statement to check if user does not include any types of characters. Password generator ends if all four variables evaluate to false
-  // Object to store user input
-  var passwordOptions = {
-    length: length,
-    hasSpecialCharacters: hasSpecialCharacters,
-    //more options here
-  };
-
-  return passwordOptions;
-}
-
-
-
-//Declare generatePassword function
-var generatePassword = function(){
+  if (hasUppercaseCharacters== true){
+    passwordOptions += upperCasedCharacters
+  }
   
-  
-
-  
-  // Function for getting a random element from an array
-function getRandom(arr) {
+   // Function for getting a random element from an array
+  function getRandom(options) {
   var randIndex = Math.floor(Math.random() * arr.length);
   var randElement = arr[randIndex];
 
